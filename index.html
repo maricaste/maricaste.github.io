@@ -1,10 +1,245 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Website</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <p>Welcome to my website.</p>
-  </body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Gets In? The 2026 World Cup at the U.S. Border | UCLA DH 101 Team C5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--ink:#14202b;--paper:#f3f5f1;--turf:#1f6b4a;--stamp:#c23b2e;--gold:#d9a520;--line:#cfd6cc;--muted:#4d5b66}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 "Source Serif 4",Georgia,serif}
+h1,h2,h3,nav{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+a{color:var(--turf)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+nav{position:sticky;top:0;z-index:1000;background:var(--ink);display:flex;gap:1.4rem;flex-wrap:wrap;padding:.8rem 1.5rem}
+nav a{color:#fff;text-decoration:none;font-weight:500;font-size:.95rem}
+nav a:hover{color:var(--gold)}
+section{max-width:960px;margin:0 auto;padding:4rem 1.5rem 1rem}
+.hero{background:var(--turf);color:#fff;max-width:none;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hero>div{max-width:960px;margin:0 auto}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1;margin:0 0 1rem;font-weight:800;letter-spacing:-.02em}
+.hero p{max-width:34rem;font-size:1.2rem;margin:0}
+.stamp{display:inline-block;border:4px solid var(--stamp);color:var(--stamp);background:rgba(255,255,255,.92);font:800 1.5rem "Bricolage Grotesque",sans-serif;padding:.2rem .9rem;transform:rotate(-6deg);margin-bottom:1.5rem}
+h2{font-size:2rem;margin:0 0 1rem;line-height:1.15}
+h3{font-size:1.2rem;margin:1.6rem 0 .4rem}
+.lede{color:var(--muted)}
+ol.rq{padding-left:1.4rem}ol.rq li{margin:.5rem 0}
+.group{font:700 .95rem "Bricolage Grotesque",sans-serif;color:var(--turf);margin-top:1.4rem}
+.panel{background:#fff;border:1px solid var(--line);padding:1.2rem;margin:1.2rem 0}
+#map{height:460px;border:1px solid var(--line);background:#dfe7e2}
+.controls{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:.8rem 0}
+.controls input[type=range]{flex:1;min-width:200px}
+.legend{font:.85rem "Bricolage Grotesque",sans-serif;background:#fff;padding:.5rem .7rem;line-height:1.5}
+.legend i{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:middle}
+.empty{color:var(--muted);font-style:italic}
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.case{background:#fff;border:1px solid var(--line);border-left:6px solid var(--stamp);padding:1rem 1.1rem}
+.case h3{margin:0 0 .3rem}
+.case .meta{font:.85rem "Bricolage Grotesque",sans-serif;color:var(--muted)}
+.todo{background:#fff6d6;border:1px dashed var(--gold);padding:.6rem .8rem;font-size:.95rem}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;padding:0;list-style:none}
+.people li{background:#fff;border:1px solid var(--line);padding:1rem}
+footer{max-width:960px;margin:3rem auto 2rem;padding:1rem 1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.sr{position:absolute;left:-9999px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <a href="#home">Home</a><a href="#questions">Research questions</a><a href="#map-section">Arrivals map</a>
+  <a href="#tickets">Ticket prices</a><a href="#cases">Denied entry</a><a href="#critique">Data critique</a>
+  <a href="#sources">Sources</a><a href="#about">About us</a>
+</nav>
+
+<header class="hero" id="home">
+  <div>
+    <span class="stamp">ADMITTED?</span>
+    <h1>Who gets in?</h1>
+    <p>The 2026 World Cup was played in three countries, but the border most fans had to cross belonged to one. We read the arrivals data alongside ticket prices and the stories of the people turned away.</p>
+  </div>
+</header>
+
+<section id="overview">
+  <h2>What this project asks</h2>
+  <p>Arrivals numbers tell us that people entered the United States, not why they came or what it took to get here. This project pairs monthly visitor counts from the National Travel and Tourism Office (NTTO) with ticket pricing and documented cases of players, teams, and fans who were refused entry or delayed, to ask who the tournament was actually open to.</p>
+  <p class="lede">UCLA Digital Humanities 101, Team C5.</p>
+</section>
+
+<section id="questions">
+  <h2>Research questions</h2>
+  <p class="group">Arrivals and participation</p>
+  <ol class="rq">
+    <li>How did the 2026 FIFA World Cup influence international travel to the United States, and what can the changes reveal about global interest in the tournament?</li>
+    <li>Did certain participating countries experience a larger increase in U.S. visitor arrivals than others, and what factors contributed to these differences?</li>
+    <li>How did the success of national teams influence travel patterns among their supporters compared with supporters of teams eliminated earlier?</li>
+    <li>Did World Cup related travel patterns differ between continents, and what could explain regional differences?</li>
+    <li>To what extent did the World Cup attract visitors from countries that historically sent relatively few travelers to the U.S.?</li>
+  </ol>
+  <p class="group">Access and restrictions</p>
+  <ol class="rq" start="6">
+    <li>How did U.S. travel restrictions affect the ability of fans from certain participating countries to attend?</li>
+    <li>How did arrivals from travel-restricted World Cup countries compare with arrivals from participating countries not subject to the same restrictions?</li>
+    <li>How did the experiences of fans from travel-restricted countries compare with those from countries allowed visa-free travel?</li>
+    <li>How might visa requirements, travel costs, and immigration policies have contributed to unequal opportunities for international fans?</li>
+    <li>What might changes in arrivals from travel-restricted countries between 2025 and 2026 reveal about the relationship between international events and U.S. immigration policies?</li>
+  </ol>
+  <p class="group">Stories and the data</p>
+  <ol class="rq" start="11">
+    <li>What do news articles or personal stories say about the experiences and challenges travelers faced entering the U.S. for the World Cup?</li>
+    <li>How do those stories compare with the patterns in the arrivals data?</li>
+  </ol>
+</section>
+
+<section id="map-section">
+  <h2>Arrivals by country, month by month</h2>
+  <p>Each country is shaded by the change in arrivals compared with the same month in 2025. Move the slider to step through the months.</p>
+  <div class="controls">
+    <label for="month">Month:</label>
+    <input type="range" id="month" min="0" max="0" value="0" aria-describedby="monthLabel">
+    <strong id="monthLabel">Loading…</strong>
+  </div>
+  <div id="map" role="img" aria-label="World map shading each country by percent change in U.S. visitor arrivals compared with the same month in 2025"></div>
+  <p id="mapStatus" class="empty"></p>
+  <div class="todo">To fill this in: paste the NTTO I-94 data into <code>data/arrivals.csv</code> (columns: <code>iso3,country,month,arrivals</code>, with months written like <code>2025-06</code> and <code>2026-06</code>). The map will update automatically.</div>
+  <h3>What the map can’t tell us</h3>
+  <p>I-94 counts record entry, not purpose or destination. A rise in June or July does not by itself mean those travelers came for the tournament, and monthly totals can’t separate match days from the weeks between them.</p>
+</section>
+
+<section id="tickets">
+  <h2>How ticket prices moved</h2>
+  <p>Face-value prices and resale prices tell different stories about who could afford a seat. This chart plots both over time by ticket category.</p>
+  <div class="panel"><canvas id="ticketChart" height="120" role="img" aria-label="Line chart of World Cup ticket prices over time by category"></canvas></div>
+  <p id="ticketStatus" class="empty"></p>
+  <div class="todo">To fill this in: add rows to <code>data/tickets.csv</code> (columns: <code>date,category,price_usd,source</code>). Record the source for every row so the chart can be cited.</div>
+</section>
+
+<section id="cases">
+  <h2>Documented cases of denied entry</h2>
+  <p>Each card is one case, linked to the reporting it comes from. We only list cases we can trace to a named, checkable source.</p>
+  <div class="cases" id="caseList"></div>
+  <div class="todo" style="margin-top:1rem">To fill this in: edit <code>data/cases.json</code>. Each entry needs <code>who</code>, <code>country</code>, <code>date</code>, <code>what_happened</code>, <code>source_title</code>, <code>source_url</code>. Cross-check each case in at least two outlets before publishing.</div>
+</section>
+
+<section id="critique">
+  <h2>Data critique</h2>
+  <h3>What the dataset includes</h3>
+  <p>Temporary international visitor arrivals to the U.S. from 2000 to 2026, drawn from I-94 admission records and organized by country of residence and month, with air-only categories for Mexico and Canada and a separate sheet of year-over-year percentage change.</p>
+  <h3>What it cannot reveal</h3>
+  <p>Why people traveled, where they went in the U.S., and how many came for the tournament. It also leaves out travel to the other two host countries and some Mexican visitors within the frontier zone.</p>
+  <h3>Origins and ontology</h3>
+  <p>The NTTO, part of the Department of Commerce’s International Trade Administration, compiled the data from CBP I-94 records, Statistics Canada’s International Travel Survey, and Mexican agencies (INEGI and Banco de México). Funding for this specific dataset is not publicly disclosed. Sorting travelers by country of residence and month gives a U.S. government view of travel, and reduces fans to counts.</p>
+  <p><a href="data/arrivals.csv">Download the arrivals data we used</a></p>
+</section>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <ul>
+    <li>Beissel, Adam, et al. “ICE Age: FIFA, Human Rights and the 2026 World Cup in Trump’s America.” <em>International Journal of Sport Policy and Politics</em>, Sept. 2026, pp. 1–36, <a href="https://doi.org/10.1080/19406940.2026.2727450">doi.org/10.1080/19406940.2026.2727450</a>.</li>
+    <li>Bar-On, Tamir, and Danyel Reiche. “FIFA’s North American World Cup in 2026 - an Introduction.” <em>Soccer and Society</em>, vol. 27, nos. 4–5, July 2026, pp. 791–807, <a href="https://doi.org/10.1080/14660970.2026.2640683">doi.org/10.1080/14660970.2026.2640683</a>.</li>
+    <li>“Pricing the World Cup: The Political Economy of Access in FIFA World Cup 2026.” <em>Managing Sport and Leisure</em>, June 2026, <a href="https://doi.org/10.1080/23750472.2026.2684001">doi.org/10.1080/23750472.2026.2684001</a>.</li>
+    <li>Wilson, Jill H. “Expanded ‘Travel Ban’ to Take Effect January 1, 2026.” Congressional Research Service, 1 Dec. 2025.</li>
+    <li class="empty">Add the remaining entries from the team bibliography here, each with a one-line note on how it shaped the argument (the model site does this).</li>
+  </ul>
+</section>
+
+<section id="about">
+  <h2>About us</h2>
+  <ul class="people">
+    <li><strong>Mariana Castellanos</strong><br><span class="empty">Role</span></li>
+    <li><strong>Zegeng Cheng</strong><br><span class="empty">Role</span></li>
+    <li><strong>Krishiv Haranath</strong><br><span class="empty">Role</span></li>
+    <li><strong>Haruka Johnson</strong><br><span class="empty">Role</span></li>
+    <li><strong>Hazel Park</strong><br><span class="empty">Role</span></li>
+  </ul>
+  <h3>AI statement</h3>
+  <p class="todo">Update this before submitting. The data critique reports no AI use; if AI helped build or edit this site, say what it was used for.</p>
+</section>
+
+<footer>© 2026 UCLA Digital Humanities 101 · Team C5</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+function parseCSV(t){
+  const rows=[];let r=[],c="",q=false;
+  for(let i=0;i<t.length;i++){const ch=t[i];
+    if(q){if(ch==='"'&&t[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}
+    else if(ch==='"')q=true;else if(ch===','){r.push(c);c=""}
+    else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;r.push(c);c="";if(r.some(x=>x!==""))rows.push(r);r=[]}
+    else c+=ch}
+  if(c!==""||r.length){r.push(c);rows.push(r)}
+  const h=rows.shift()||[];
+  return rows.map(x=>Object.fromEntries(h.map((k,i)=>[k.trim(),(x[i]||"").trim()])));
+}
+const load=u=>fetch(u).then(r=>{if(!r.ok)throw new Error(u);return r.text()});
+
+/* ---------- Arrivals map ---------- */
+(async function(){
+  const map=L.map('map',{worldCopyJump:true}).setView([20,0],2);
+  const status=document.getElementById('mapStatus');
+  const slider=document.getElementById('month'),label=document.getElementById('monthLabel');
+  let data=[];
+  try{data=parseCSV(await load('data/arrivals.csv'))}catch(e){}
+  const by={};data.forEach(d=>{(by[d.iso3]=by[d.iso3]||{name:d.country})[d.month]=+d.arrivals});
+  const months=[...new Set(data.map(d=>d.month).filter(m=>m.startsWith('2026')))].sort();
+  if(!months.length){label.textContent="No data yet";status.textContent="Add rows to data/arrivals.csv to see the map shaded.";}
+  slider.max=Math.max(months.length-1,0);
+  const names=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const colors=[[-50,'#8c2d04'],[-20,'#e6550d'],[-5,'#fdae6b'],[5,'#e5ebe6'],[20,'#74c476'],[50,'#238b45'],[Infinity,'#00441b']];
+  const color=p=>p==null?'#d7dcd8':colors.find(c=>p<c[0])[1];
+  function change(iso,m){const d=by[iso];if(!d)return null;const prev=(+m.slice(0,4)-1)+m.slice(4);
+    return d[m]!=null&&d[prev]?((d[m]-d[prev])/d[prev])*100:null}
+  let layer;
+  try{
+    const geo=await (await fetch('https://cdn.jsdelivr.net/gh/johan/world.geo.json@master/countries.geo.json')).json();
+    function draw(){
+      const m=months[+slider.value];
+      if(m)label.textContent=names[+m.slice(5)-1]+" "+m.slice(0,4)+" vs. "+(+m.slice(0,4)-1);
+      if(layer)layer.remove();
+      layer=L.geoJSON(geo,{
+        style:f=>({fillColor:color(m?change(f.id,m):null),weight:.6,color:'#fff',fillOpacity:.9}),
+        onEachFeature:(f,l)=>{const p=m?change(f.id,m):null;
+          l.bindTooltip(f.properties.name+": "+(p==null?"no data":(p>0?"+":"")+p.toFixed(1)+"%"))}
+      }).addTo(map);
+    }
+    slider.addEventListener('input',draw);draw();
+  }catch(e){status.textContent="The country outlines could not load. Check your connection and refresh."}
+  const lg=L.control({position:'bottomright'});
+  lg.onAdd=()=>{const d=L.DomUtil.create('div','legend');
+    d.innerHTML="<strong>Change vs. 2025</strong><br>"+[[ '#8c2d04','below −50%'],['#e6550d','−50% to −20%'],['#fdae6b','−20% to −5%'],['#e5ebe6','−5% to +5%'],['#74c476','+5% to +20%'],['#238b45','+20% to +50%'],['#00441b','above +50%'],['#d7dcd8','no data']].map(x=>`<i style="background:${x[0]}"></i>${x[1]}`).join('<br>');return d};
+  lg.addTo(map);
+})();
+
+/* ---------- Ticket prices ---------- */
+(async function(){
+  const s=document.getElementById('ticketStatus');
+  let rows=[];try{rows=parseCSV(await load('data/tickets.csv'))}catch(e){}
+  if(!rows.length){s.textContent="No ticket data yet. Add rows to data/tickets.csv.";return}
+  const dates=[...new Set(rows.map(r=>r.date))].sort();
+  const cats=[...new Set(rows.map(r=>r.category))];
+  const pal=['#1f6b4a','#c23b2e','#d9a520','#14202b','#5b7fa6','#8a5a9e'];
+  new Chart(document.getElementById('ticketChart'),{type:'line',
+    data:{labels:dates,datasets:cats.map((c,i)=>({label:c,borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length],tension:.2,
+      data:dates.map(d=>{const r=rows.find(x=>x.date===d&&x.category===c);return r?+r.price_usd:null})}))},
+    options:{spanGaps:true,scales:{y:{title:{display:true,text:"Price (USD)"}}}}});
+})();
+
+/* ---------- Denied-entry cases ---------- */
+(async function(){
+  const box=document.getElementById('caseList');
+  let cases=[];try{cases=JSON.parse(await load('data/cases.json'))}catch(e){}
+  if(!cases.length){box.innerHTML='<p class="empty">No cases added yet.</p>';return}
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  box.innerHTML=cases.map(c=>`<article class="case"><h3>${esc(c.who)}</h3>
+    <div class="meta">${esc(c.country)} · ${esc(c.date)}</div>
+    <p>${esc(c.what_happened)}</p>
+    <a href="${esc(c.source_url)}">${esc(c.source_title)}</a></article>`).join('');
+})();
+</script>
+</body>
 </html>
