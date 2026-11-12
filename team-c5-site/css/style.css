@@ -1,0 +1,81 @@
+/* ==========================================================
+   Who Gets In? — shared stylesheet for every page
+   Owner: one person. Need a change? Open a GitHub Issue.
+   ========================================================== */
+
+/* ---------- Colors (change these to re-theme the whole site) ---------- */
+:root{
+  --ink:#14202b;     /* text, nav bar */
+  --paper:#f3f5f1;   /* page background */
+  --turf:#1f6b4a;    /* banner, links */
+  --stamp:#c23b2e;   /* "ADMITTED?" stamp, case cards */
+  --gold:#d9a520;    /* hover, current page, to-do boxes */
+  --line:#cfd6cc;    /* borders */
+  --muted:#4d5b66;   /* secondary text */
+}
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 "Source Serif 4",Georgia,serif}
+h1,h2,h3,nav{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+a{color:var(--turf)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h2{font-size:2rem;margin:0 0 1rem;line-height:1.15}
+h3{font-size:1.2rem;margin:1.6rem 0 .4rem}
+.lede{color:var(--muted)}
+.empty{color:var(--muted);font-style:italic}
+.sr{position:absolute;left:-9999px}
+
+/* ---------- Nav bar ---------- */
+nav{position:sticky;top:0;z-index:1000;background:var(--ink);display:flex;gap:1.4rem;flex-wrap:wrap;padding:.8rem 1.5rem}
+nav a{color:#fff;text-decoration:none;font-weight:500;font-size:.95rem}
+nav a:hover{color:var(--gold)}
+nav a[aria-current="page"]{color:var(--gold);text-decoration:underline;text-underline-offset:4px}
+
+/* ---------- Banner ---------- */
+.hero{background:var(--turf);color:#fff;max-width:none;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hero>div{max-width:960px;margin:0 auto}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1;margin:0 0 1rem;font-weight:800;letter-spacing:-.02em}
+.hero p{max-width:34rem;font-size:1.2rem;margin:0}
+.hero.small{padding:3rem 1.5rem 2.5rem}
+.hero.small h1{font-size:clamp(2rem,5vw,3.2rem)}
+.stamp{display:inline-block;border:4px solid var(--stamp);color:var(--stamp);background:rgba(255,255,255,.92);font:800 1.5rem "Bricolage Grotesque",sans-serif;padding:.2rem .9rem;transform:rotate(-6deg);margin-bottom:1.5rem}
+
+/* ---------- Page sections ---------- */
+section{max-width:960px;margin:0 auto;padding:4rem 1.5rem 1rem}
+.panel{background:#fff;border:1px solid var(--line);padding:1.2rem;margin:1.2rem 0}
+.todo{background:#fff6d6;border:1px dashed var(--gold);padding:.6rem .8rem;font-size:.95rem}
+
+/* ---------- Home: research questions + page links ---------- */
+ol.rq{padding-left:1.4rem}
+ol.rq li{margin:.5rem 0}
+.group{font:700 .95rem "Bricolage Grotesque",sans-serif;color:var(--turf);margin-top:1.4rem}
+.explore{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;padding:0;list-style:none}
+.explore a{display:block;height:100%;background:#fff;border:1px solid var(--line);border-top:4px solid var(--turf);padding:1rem 1.1rem;text-decoration:none;color:var(--ink)}
+.explore a:hover{border-top-color:var(--gold)}
+.explore strong{display:block;font-family:"Bricolage Grotesque",sans-serif;color:var(--turf);margin-bottom:.2rem}
+.explore span{font-size:.95rem;color:var(--muted)}
+
+/* ---------- Arrivals: map ---------- */
+#map{height:460px;border:1px solid var(--line);background:#dfe7e2}
+.controls{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:.8rem 0}
+.controls input[type=range]{flex:1;min-width:200px}
+.legend{font:.85rem "Bricolage Grotesque",sans-serif;background:#fff;padding:.5rem .7rem;line-height:1.5}
+.legend i{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:middle}
+
+/* ---------- Access + Stories: cards ---------- */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.case{background:#fff;border:1px solid var(--line);border-left:6px solid var(--stamp);padding:1rem 1.1rem}
+.case h3{margin:0 0 .3rem}
+.case .meta{font:.85rem "Bricolage Grotesque",sans-serif;color:var(--muted)}
+.case.story{border-left-color:var(--turf)}
+
+/* ---------- About: team ---------- */
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;padding:0;list-style:none}
+.people li{background:#fff;border:1px solid var(--line);padding:1rem}
+
+/* ---------- Footer ---------- */
+footer{max-width:960px;margin:3rem auto 2rem;padding:1rem 1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

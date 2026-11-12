@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access | Who Gets In? · UCLA DH 101 Team C5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav aria-label="Main">
+  <a href="index.html">Home</a>
+  <a href="arrivals.html">Arrivals</a>
+  <a href="access.html" aria-current="page">Access</a>
+  <a href="tickets.html">Tickets</a>
+  <a href="stories.html">Stories</a>
+  <a href="about.html">About</a>
+</nav>
+
+<header class="hero small">
+  <div>
+    <h1>Access</h1>
+    <p>Travel restrictions, visas, and the players, teams and fans who were refused entry or delayed.</p>
+  </div>
+</header>
+
+<main>
+  <section id="restrictions">
+    <h2>Restricted vs. visa-free countries</h2>
+    <p>Not every qualified nation’s fans faced the same border. This section compares participating countries under U.S. travel restrictions with those whose citizens could travel visa-free.</p>
+    <div class="todo">To fill this in: list the participating countries in each group, cite the policy each one fell under, and compare their arrivals (research questions 6–10). The CRS report on the expanded travel ban, listed on the About page, is a starting source.</div>
+  </section>
+
+  <section id="cases">
+    <h2>Documented cases of denied entry</h2>
+    <p>Each card is one case, linked to the reporting it comes from. We only list cases we can trace to a named, checkable source.</p>
+    <div class="cases" id="caseList"></div>
+    <div class="todo" style="margin-top:1rem">To fill this in: edit <code>data/cases.json</code>. Each entry needs <code>who</code>, <code>country</code>, <code>date</code>, <code>what_happened</code>, <code>source_title</code>, <code>source_url</code>. Cross-check each case in at least two outlets before publishing.</div>
+  </section>
+</main>
+
+<footer>© 2026 UCLA Digital Humanities 101 · Team C5</footer>
+
+<script src="js/common.js"></script>
+<script src="js/cases.js"></script>
+</body>
+</html>
